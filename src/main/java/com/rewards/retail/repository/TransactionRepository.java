@@ -1,6 +1,6 @@
 package com.rewards.retail.repository;
 
-import com.rewards.retail.entity.BankTransaction;
+import com.rewards.retail.entity.RetailTransaction;
 import org.hibernate.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,10 +9,10 @@ import org.springframework.data.repository.query.Param;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public interface TransactionRepository extends JpaRepository<BankTransaction, Long> {
+public interface TransactionRepository extends JpaRepository<RetailTransaction, Long> {
     @Query("""
            select coalesce(sum(t.amount), 0)
-           from BankTransaction t
+           from RetailTransaction t
            where t.personId = :personId
              and t.transactionDate between :start and :end
            """)
