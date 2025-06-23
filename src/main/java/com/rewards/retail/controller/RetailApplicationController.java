@@ -1,17 +1,21 @@
 package com.rewards.retail.controller;
 
+import com.rewards.retail.dto.MonthlyRewardSummary;
 import com.rewards.retail.dto.RewardResponse;
+import com.rewards.retail.dto.RewardRequest;
 import com.rewards.retail.service.RetailApplicationService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/rewards")
+@RequestMapping("/api/v1")
+@Validated
 public class RetailApplicationController {
 
     private final RetailApplicationService service;
@@ -19,9 +23,21 @@ public class RetailApplicationController {
     public RetailApplicationController(RetailApplicationService service) {
         this.service = service;
     }
-    @GetMapping("/{personId}")
-    public RewardResponse reward(@PathVariable Long personId) {
-        return service.calculate(personId);
+
+    @PostMapping("/rewards/summary")
+    public RewardResponse reward(@Valid @RequestBody List<@Valid RewardRequest> transactions) {
+        return service.calculateRewards(transactions);
+
+    }
+
+
+    @PostMapping("/rewards/customer/{customerId}")
+    public RewardResponse rewardForCustomer(
+            @PathVariable("customerId") Long customerId,
+            @RequestParam("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+            @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
+            @RequestBody List<RewardRequest> transactions) {
+        return service.calculateRewardsForCustomer(customerId, from, to, transactions);
     }
 }
 
