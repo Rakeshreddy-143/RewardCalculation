@@ -40,7 +40,7 @@ public class RetailApplicationService {
             int totalRewardPoints = 0;
 
             for (Map.Entry<YearMonth, List<RewardRequest>> monthEntry : personEntry.getValue().entrySet()) {
-                int totalSpent = monthEntry.getValue().stream().mapToInt(RewardRequest::getAmount).sum();
+                int totalSpent = monthEntry.getValue().stream().mapToInt(tr -> Math.max(0, tr.getAmount())).sum();
                 int rewardPoints = monthEntry.getValue().stream()
                         .mapToInt(tr -> calculateRewardPoints(tr.getAmount()))
                         .sum();
@@ -68,7 +68,7 @@ public class RetailApplicationService {
     private int calculateRewardPoints(int amount) {
         if (amount > 100) {
             return (2 * (amount - 100)) + 50;
-        } else if (amount >= 50) {
+        } if (amount >= 50) {
             return amount - 50;
         } else {
             return 0;
