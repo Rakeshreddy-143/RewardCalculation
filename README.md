@@ -48,7 +48,7 @@ Reward points are calculated per transaction as follows:
   }
 ]
 ```
-### Response
+#### Response
 ```json
 {
   "rewards": {
