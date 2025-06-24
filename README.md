@@ -47,8 +47,9 @@ Reward points are calculated per transaction as follows:
     "transactionDate": "2025-05-15"
   }
 ]
-
+```
 ### Response
+```json
 {
   "rewards": {
     "1": {
@@ -68,9 +69,9 @@ Reward points are calculated per transaction as follows:
 
 ⸻
 
-2. Summary for Specific Customer and Date Range
+### 2. Summary for Specific Customer and Date Range
 
-POST /rewards/customer/{customerId}?from=2025-05-01&to=2025-06-01
+**POST** `/rewards/customer/{customerId}?from=2025-05-01&to=2025-06-01`
 
 Path Parameter
 	•	customerId: ID of the customer
