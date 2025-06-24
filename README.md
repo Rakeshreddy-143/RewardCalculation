@@ -71,17 +71,28 @@ Reward points are calculated per transaction as follows:
 
 ### 2. Summary for Specific Customer and Date Range
 
-**POST** `/rewards/customer/{customerId}?from=2025-05-01&to=2025-06-01`
+`POST` `/rewards/customer/{customerId}?from=2025-05-01&to=2025-06-01`
 
-Path Parameter
-	•	customerId: ID of the customer
+---
 
-Query Parameters
-	•	from: Start date (inclusive)
-	•	to: End date (inclusive)
+#### **Path Parameter**
 
-Request Body
+* `customerId`: ID of the customer
 
+---
+
+#### **Query Parameters**
+
+| Name   | Type     | Description                                   |
+| ------ | -------- | --------------------------------------------- |
+| `from` | `String` | Start date (inclusive) — format: `YYYY-MM-DD` |
+| `to`   | `String` | End date (inclusive) — format: `YYYY-MM-DD`   |
+
+---
+
+#### **Request Body**
+
+```json
 [
   {
     "personId": 1,
@@ -99,9 +110,13 @@ Request Body
     "transactionDate": "2025-05-22"
   }
 ]
+```
 
-Response
+---
 
+#### 📤 **Response**
+
+```json
 {
   "rewards": {
     "1": {
@@ -116,17 +131,9 @@ Response
     }
   }
 }
-
+```
 
 ⸻
-
-How to Run
-
-Prerequisites
-	•	Java 17+
-	•	Maven 3.6+
-
-Build & Run
 
 # Build the project
 mvn clean install
@@ -139,7 +146,7 @@ http://localhost:8080
 
 ⸻
 
-🗂 Project Structure
+# Project Structure
 
 src/main/java/
 └── com/example/retail
@@ -158,15 +165,15 @@ src/main/java/
 
 ⸻
 
-🧪 Sample Usage with curl
+### 🧪 Sample Usage with curl
 
-Calculate Rewards for All Customers
+#### Calculate Rewards for All Customers
 
 curl -X POST http://localhost:8080/rewards/summary \
   -H "Content-Type: application/json" \
   -d '[{"personId":1,"amount":120,"transactionDate":"2025-05-15"}]'
 
-Calculate Rewards for a Specific Customer
+#### Calculate Rewards for a Specific Customer
 
 curl -X POST "http://localhost:8080/rewards/customer/1?from=2025-05-01&to=2025-06-01" \
   -H "Content-Type: application/json" \
