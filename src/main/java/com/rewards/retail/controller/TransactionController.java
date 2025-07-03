@@ -29,8 +29,8 @@ public class TransactionController {
     @GetMapping("/rewards/customer/{customerId}")
     public ResponseEntity<?> rewardForCustomer(
             @PathVariable("customerId") Long customerId,
-            @RequestParam("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
-            @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {
+            @RequestParam(value = "from",required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+            @RequestParam(value = "to",required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {
 
         validator.validate(customerId, from, to);
         if (from == null && to == null) {

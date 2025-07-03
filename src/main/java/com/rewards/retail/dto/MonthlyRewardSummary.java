@@ -12,4 +12,9 @@ public class MonthlyRewardSummary {
 
     private List<RewardTransactionSummary> transactions;
     private int totalRewardPoints;
+
+    private String name;
+    private String email;
+    private String phoneNumber;
+
 }

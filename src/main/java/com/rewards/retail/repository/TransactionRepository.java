@@ -1,22 +1,14 @@
 package com.rewards.retail.repository;
 
-import com.rewards.retail.entity.RetailTransaction;
-import org.hibernate.Transaction;
+import com.rewards.retail.entity.BankTransaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
-public interface TransactionRepository extends JpaRepository<RetailTransaction, Long> {
-    @Query("""
-           select coalesce(sum(t.amount), 0)
-           from RetailTransaction t
-           where t.personId = :personId
-             and t.transactionDate between :start and :end
-           """)
-    int totalSpentInMonth(@Param("personId") Long personId,
-                                 @Param("start") LocalDate start,
-                                 @Param("end") LocalDate end);
+public interface TransactionRepository extends JpaRepository<BankTransaction, Long> {
+
+    List<BankTransaction> findByCustomerIdAndTransactionDateBetween(Long customerId, LocalDate from, LocalDate to);
 }
