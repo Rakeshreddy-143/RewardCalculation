@@ -8,15 +8,12 @@ import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 public interface TransactionRepository extends JpaRepository<BankTransaction, Long> {
-    @Query("""
-           select coalesce(sum(t.amount), 0)
-           from BankTransaction t
-           where t.personId = :personId
-             and t.transactionDate between :start and :end
-           """)
-    int totalSpentInMonth(@Param("personId") Long personId,
-                                 @Param("start") LocalDate start,
-                                 @Param("end") LocalDate end);
+
+
+    List<BankTransaction> findAllByCustomerId(Long customerId);
+
+    List<BankTransaction> findByCustomerIdAndTransactionDateBetween(Long customerId, LocalDate transactionDateAfter, LocalDate transactionDateBefore);
 }
