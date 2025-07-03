@@ -32,6 +32,7 @@ public class TransactionController {
             @RequestParam(value = "from",required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
             @RequestParam(value = "to",required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {
 
+
         validator.validate(customerId, from, to);
         if (from == null && to == null) {
             from = LocalDate.now().minusMonths(3);

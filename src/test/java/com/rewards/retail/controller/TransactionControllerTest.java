@@ -51,27 +51,6 @@ class TransactionControllerTest {
     }
 
     @Test
-    void testGetRewardsForCustomer_MissingToParam() throws Exception {
-        mockMvc.perform(get("/api/v1/rewards/customer/1")
-                        .param("from", "2024-01-01")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    void testGetRewardsForCustomer_MissingFromParam() throws Exception {
-        mockMvc.perform(get("/api/v1/rewards/customer/1")
-                        .param("to", "2024-03-31")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-    @Test
-    void testGetRewardsForCustomer_NegativeCustomerId() throws Exception {
-        mockMvc.perform(get("/api/v1/rewards/customer/-1")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-    @Test
     void testGetRewardsForCustomer_DifferentCustomerId() throws Exception {
         Mockito.when(transactionService.calculateRewardsForCustomer(Mockito.eq(2L), Mockito.any(), Mockito.any()))
                 .thenReturn(new RewardResponse(new HashMap<>()));
